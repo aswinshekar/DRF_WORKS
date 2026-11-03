@@ -16,7 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.views import APIView
 
+from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ListCreate',views.DoctorListCreateView.as_view()),
+    path('RetrieveUpdateDelete/<int:pk>',views.RetrieveUpdateDelete.as_view()),
+    path('search',views.DoctorFilter.as_view()),
+    path('register',views.AdminRegiser.as_view()),
+    path('appointmentregister',views.AppointmentCreateView.as_view())
+
 ]

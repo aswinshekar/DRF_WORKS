@@ -1,5 +1,5 @@
 """
-URL configuration for movie_api project.
+URL configuration for Employee_crud_(ALL) project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
@@ -15,18 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from rest_framework.views import APIView
-from app import views
+from django.urls import path,include
+from app  import views
+from rest_framework.routers import DefaultRouter
+router=DefaultRouter()
+
+router.register('employees',views.EmployeeView)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('create',views.MovieCreate.as_view()),
-    path('view/',views.MovieView.as_view()),
-    path("specificiew/<int:i>",views.MovieViewSpecific.as_view()),
-    path("delete/<int:i>",views.MovieDelete.as_view()),
-    path("update/<int:i>",views.MovieUpdate.as_view()),
-    path("partialupdate/<int:i>",views.MoviePartialUpdate.as_view()),
-    path('search',views.SearchAPIView.as_view()),
-    path('register',views.RegisterView.as_view())
+    path('',include(router.urls)),
+    # path('View/', views.EmployeeList.as_view()),
+    # path('employe/<int:pk>', views.EmployeeDetail.as_view()),
+    # path('create', views.EmployeeCreate.as_view()),
+    # path('delete/<int:i>', views.EmployeeDelete.as_view()),
+    # path('update/<int:i>', views.EmployeeUpdate.as_view()),
+    # path('updatepartial/<int:i>', views.EmployeePartialUpdate.as_view())
 ]
-

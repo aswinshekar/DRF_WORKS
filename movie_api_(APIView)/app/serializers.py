@@ -7,6 +7,9 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model=Movie
         fields = ['title', 'director', 'language', 'year', 'runtime', 'rating','image']
+
+
+
 from django.core.mail import send_mail
 from app.models import CustomUser
 class UserSerializer(serializers.ModelSerializer):

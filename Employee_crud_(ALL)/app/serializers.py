@@ -34,13 +34,13 @@ class EmployeeSerializer(serializers.Serializer):
         instance.Designation= validated_data.get('Designation',instance.Designation)
         instance.save()
         return instance
-#
+
 # class EmployeeSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=Employee
 #         fields ='__all__'
 #         read_only_fields=['id','joining_date']
-#
+
 #     def validate(self,data):
 #         if data['Age']<=0:
 #             raise serializers.ValidationError("AGE SHOULD BE POSITIVE")

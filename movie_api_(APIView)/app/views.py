@@ -6,6 +6,8 @@ from app.serializers import MovieSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from app.models import Movie
+
+
 # Create your views here.
 
 
@@ -16,9 +18,9 @@ class MovieCreate(APIView):
 
         serializer_instance=MovieSerializer(data=request.data)#deserializeation
         if serializer_instance.is_valid():
-            print(serializer_instance.validated_data)
-            director=serializer_instance.validated_data['director']
-            print(director)
+            # print(serializer_instance.validated_data)
+            # director=serializer_instance.validated_data['director']
+            # print(director)
             serializer_instance.save()
             return Response(serializer_instance.data)
         else:

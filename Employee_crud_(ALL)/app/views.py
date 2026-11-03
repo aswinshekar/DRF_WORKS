@@ -1,8 +1,8 @@
-# from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 # from django.views import View
 # from django.http import JsonResponse
 # from app import serializers
-# from app.models import Employee
+from app.models import Employee
 # # Create your views here.
 # #API VIEW FOR READINFG ALL RECORD
 # #using django
@@ -11,19 +11,19 @@
 # #         s=list(Employee.objects.all().values())
 # #         return JsonResponse(s, safe=False)
 # #using DRF
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from app.serializers import EmployeeSerializer
-# # class EmployeeList(APIView):
-# #     def get(selfself,request):
-# #         #reads all employee records
-# #         qs=Employee.objects.all() #DJANGO FORMAT QS
-# #         # CONVERTS QUERYSET INTO PYTHON NATIVE USING SERIALIZER
-# #         serializer_instance=EmployeeSerializer(qs,many=True)
-# #         # RETURNS RESPONSE AS JSON USING RESPONSE FUNTION
-# #         # print(serializer_instance.data)
-# #         return Response(serializer_instance.data)
-#
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from app.serializers import EmployeeSerializer
+class EmployeeList(APIView):
+    def get(selfself,request):
+        #reads all employee records
+        qs=Employee.objects.all() #DJANGO FORMAT QS
+        # CONVERTS QUERYSET INTO PYTHON NATIVE USING SERIALIZER
+        serializer_instance=EmployeeSerializer(qs,many=True)
+        # RETURNS RESPONSE AS JSON USING RESPONSE FUNTION
+        # print(serializer_instance.data)
+        return Response(serializer_instance.data)
+
 # # using mixing
 # from rest_framework import mixins,generics
 # # class EmployeeList(mixins.ListModelMixin,generics.GenericAPIView):
@@ -46,16 +46,16 @@
 # #         data=list(s.values())
 # #         #return response
 # #         return JsonResponse(data,safe=False)
-# #using DRF
-# # class EmployeeDetail(APIView):
-# #     def get(self,request,i):
-# #         #reads employee record matching id
-# #         # e=Employee.objects.get(id=i)
-# #         e=get_object_or_404(Employee,id=i)
-# #         #calls employee serializer class for serialization\
-# #         serializer_instance=EmployeeSerializer(e)
-# #         #sends response back to client
-# #         return Response(serializer_instance.data)
+# using DRF
+class EmployeeDetail(APIView):
+    def get(self,request,i):
+        #reads employee record matching id
+        # e=Employee.objects.get(id=i)
+        e=get_object_or_404(Employee,id=i)
+        #calls employee serializer class for serialization\
+        serializer_instance=EmployeeSerializer(e)
+        #sends response back to client
+        return Response(serializer_instance.data)
 # # USING MIXING
 # # class EmployeeDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
 # #     queryset = Employee.objects.all()
@@ -93,25 +93,22 @@
 # #         #returns response
 # #         return JsonResponse({'messgae':"created"})
 # # #using DRF
-# # class EmployeeCreate(APIView):
-# #     def post(self,request):
-# #         data=request.data#PYTHON NATIVE TYPE
-# #         # VALIDATION+CONVERSION(NATIVE TO MODEL OBJECT)
-# #         serializer_instance = EmployeeSerializer(data=request.data)
-# #         print(request.data)
-# #
-# #         # CHECKS WHERETHER THE DATA COMING FROM CLIENT IS VALID,IF VALID
-# #         # SAVES THE DATA INTO MODEL
-# #         #
-# #         if serializer_instance.is_valid():
-# #             serializer_instance.save()#SAVES THE DATA  INTO MODEL
-# #             return Response(serializer_instance.data)# SENDS CREATED OBJECT AS RESPONSE
-# #        # IF DATA IS NOT VALID IT WILL SHOW VALIDATION ERRORS
-# #
-# #         else:
-# #             return Response(serializer_instance.errors)
+class EmployeeCreate(APIView):
+    def post(self,request):
+        data=request.data#PYTHON NATIVE TYPE
+        # VALIDATION+CONVERSION(NATIVE TO MODEL OBJECT)
+        serializer_instance = EmployeeSerializer(data=request.data)
+        print(request.data)
+        # CHECKS WHERETHER THE DATA COMING FROM CLIENT IS VALID,IF VALID
+        # SAVES THE DATA INTO MODEL
+        if serializer_instance.is_valid():
+            serializer_instance.save()#SAVES THE DATA  INTO MODEL
+            return Response(serializer_instance.data)# SENDS CREATED OBJECT AS RESPONSE
+       # IF DATA IS NOT VALID IT WILL SHOW VALIDATION ERRORS
+        else:
+            return Response(serializer_instance.errors)
+
 # #USINF MIXIN CLASS
-#
 # class EmployeeCreate(mixins.CreateModelMixin, generics.GenericAPIView):
 #     queryset = Employee.objects.all()
 #     serializer_class = serializers.EmployeeSerializer
@@ -130,14 +127,14 @@
 # #         #RETURNS RESPONSE BACK TO CLIENT
 # #         return JsonResponse({"message":"deleted"})
 # #using DRF
-#
-# class EmployeeDelete(APIView):
-#     def delete(self,request,i):
-#         #read record mathcing with id
-#         e=get_object_or_404(Employee,id=i)
-#         e.delete()
-#         return Response("message : DELETED RECORD SUCCEFULLY ")
-#
+
+class EmployeeDelete(APIView):
+    def delete(self,request,i):
+        #read record mathcing with id
+        e=get_object_or_404(Employee,id=i)
+        e.delete()
+        return Response("message : DELETED RECORD SUCCEFULLY ")
+
 # #
 # # #API TO UPDATE A EXISTING RECORD
 # # USING DJANGO
@@ -170,25 +167,22 @@
 #
 # #using DRF
 #
-# class EmployeeUpdate(APIView):
-#     def put(self,requst,i):
-#         #READS THE RECORD MATCHING WITH ID
-#         e=get_object_or_404(Employee,id=i)
-#         #FETCHES THE DATA COMING FROM CLIENT
-#         data=requst.data
-#         #CALLS EMPLOYEE SERIALIZER CLASS FOR DESERIALIZATION
-#         serializer_instance =EmployeeSerializer(instance=e,data=data)
-#         if serializer_instance.is_valid():
-#                 #SAVE THE RECORD
-#                 serializer_instance.save()
-#         #SENDS RESPONSE BACK TO CLIENT
-#                 return Response(serializer_instance.data)
-#         else:
-#             return Response(serializer_instance.errors)
-#
-#
-#
-#
+class EmployeeUpdate(APIView):
+    def put(self,requst,i):
+        #READS THE RECORD MATCHING WITH ID
+        e=get_object_or_404(Employee,id=i)
+        #FETCHES THE DATA COMING FROM CLIENT
+        data=requst.data
+        #CALLS EMPLOYEE SERIALIZER CLASS FOR DESERIALIZATION
+        serializer_instance =EmployeeSerializer(instance=e,data=data)
+        if serializer_instance.is_valid():
+                #SAVE THE RECORD
+                serializer_instance.save()
+        #SENDS RESPONSE BACK TO CLIENT
+                return Response(serializer_instance.data)
+        else:
+            return Response(serializer_instance.errors)
+
 # # #API TO UPDATE DATA PARTIALY (patch)
 # # USING DJANGO
 # # from json import loads
@@ -222,27 +216,27 @@
 # #         # RETURNS RESPONSE BACK TO CLIENT
 # #         return JsonResponse({'message': 'UPDATED'})
 # #using DRF
-#
-#
-# class EmployeePartialUpdate(APIView):
-#     def patch(self,requst,i):
-#         #READS THE RECORD MATCHING WITH ID
-#         e=get_object_or_404(Employee,id=i)
-#         #FETCHES THE DATA COMING FROM CLIENT
-#         data=requst.data
-#         #CALLS EMPLOYEE SERIALIZER CLASS FOR DESERIALIZATION
-#         serializer_instance =EmployeeSerializer(instance=e,data=data,partial=True)
-#         if serializer_instance.is_valid():
-#                 #SAVE THE RECORD
-#                 serializer_instance.save()
-#         #SENDS RESPONSE BACK TO CLIENT
-#                 return Response(serializer_instance.data)
-#         else:
-#             return Response(serializer_instance.errors)
-from rest_framework import viewsets
-from app.models import Employee
-from app.serializers import EmployeeSerializer
+class EmployeePartialUpdate(APIView):
+    def patch(self,requst,i):
+        #READS THE RECORD MATCHING WITH ID
+        e=get_object_or_404(Employee,id=i)
+        #FETCHES THE DATA COMING FROM CLIENT
+        data=requst.data
+        #CALLS EMPLOYEE SERIALIZER CLASS FOR DESERIALIZATION
+        serializer_instance =EmployeeSerializer(instance=e,data=data,partial=True)
+        if serializer_instance.is_valid():
+                #SAVE THE RECORD
+                serializer_instance.save()
+        #SENDS RESPONSE BACK TO CLIENT
+                return Response(serializer_instance.data)
+        else:
+            return Response(serializer_instance.errors)
 
-class EmployeeView(viewsets.ModelViewSet):#GET/POST/PUPATCH/DELETE#
-     queryset=Employee.objects.all()
-     serializer_class=EmployeeSerializer
+#VIEWSET
+# from rest_framework import viewsets
+# from app.models import Employee
+# from app.serializers import EmployeeSerializer
+#
+# class EmployeeView(viewsets.ModelViewSet):#GET/POST/PUPATCH/DELETE#
+#      queryset=Employee.objects.all()
+#      serializer_class=EmployeeSerializer
