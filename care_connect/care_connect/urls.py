@@ -14,17 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from xml.etree.ElementInclude import include
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from rest_framework.views import APIView
 
-from app import views
+import doctors
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ListCreate',views.DoctorListCreateView.as_view()),
-    path('RetrieveUpdateDelete/<int:pk>',views.RetrieveUpdateDelete.as_view()),
-    path('search',views.DoctorFilter.as_view()),
-    path('register',views.AdminRegiser.as_view()),
-    path('appointmentregister',views.AppointmentCreateView.as_view())
+    path('doctors/',include('doctors.urls')),
+    path('patients/',include('patients.urls'))
 
 ]
