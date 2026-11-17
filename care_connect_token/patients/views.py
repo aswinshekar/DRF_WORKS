@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render
 from rest_framework.views import APIView
 from django.db.models import Model, Q
@@ -18,8 +19,9 @@ from patients.models import Appointment
 from datetime import time, datetime, timedelta
 from patients.serializers import AppointmentSerializer
 #APPOINTMENT BOOKING
+from rest_framework.authentication import TokenAuthentication
 class AppointmentCreateView(APIView):
-    authentication_classes = [BasicAuthentication]
+    authentication_classes = [TokenAuthentication,]
     permission_classes = [IsAuthenticated]
     def post(self,request):
         serializer_instance=AppointmentSerializer(data=request.data)
@@ -61,3 +63,29 @@ class PatientRegister(APIView):
 #SEIRALIZER
 # VIEW
 #PATH
+# from rest_framework.authtoken.models import Token
+# class Obtain_auth_token(APIView):
+#     def post(self, request):
+#
+#         # fetches username and password from user data
+#         u=request.data['username']
+#         p=request.data['password']
+#
+#         # checks whether matching user exists in User table
+#         user=authenticate(username=u,password=p)
+#         #authenticate () built in function checks whether
+#         #user exits or not
+#         #if matching user exists if returns user objects else none
+#
+#
+#
+#         # if user exists
+#         if user:
+#         # generates token and sends as Response
+#             token,created=Token.objects.get_or_create(user=user)
+#             print(token,created)
+#             return Response({'token':token.key},status=status.HTTP_201_CREATED)
+#
+#         else:
+#             return Response({"message":"INVALID CREDENTIALS,UNABLE TO LOGIN"},status=status.HTTP_400_BAD_REQUEST)
+#         # sends Response as Invalid User Credentials

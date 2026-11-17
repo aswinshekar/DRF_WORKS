@@ -24,6 +24,7 @@ urlpatterns = [
     path('review_read/<int:i>',views.ReviewRead.as_view()),
     path('update/<int:i>',views.ReviewUpdate.as_view()),
     path('pupdate/<int:i>',views.ReviewPartialUpdate.as_view()),
-    path('delete/<int:i>',views.ReviewDelete.as_view())
+    path('delete/<int:i>',views.ReviewDelete.as_view()),
+    path('search',views.ReviewSearch.as_view())
 
 ]

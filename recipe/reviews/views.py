@@ -1,8 +1,13 @@
+from urllib import request
+
+from django.db.models.query_utils import Q
 from django.shortcuts import render, get_object_or_404
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
+from recipes.models import recipe
+from reviews.permissions import IsOwner
 from reviews.serializer import ReviewSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -35,24 +40,29 @@ class ReviewRead(APIView):
         return Response(serializer_instance.data, status=status.HTTP_200_OK )
 
 class ReviewUpdate(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated,IsOwner]
     def put(self,request,i):
-        u = request.user
+        # u = request.user
         r = get_object_or_404(Review, id=i)
+        self.check_object_permissions(request,r)#manually checks if requested user has permissions
+        #to perform the following operations on review object r
         serializer_instance=ReviewSerializer(instance=r,data=request.data)
         if serializer_instance.is_valid():
-            serializer_instance.save(user=u)
+            serializer_instance.save()
             return Response(serializer_instance.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_instance.errors)
 
-
 class ReviewPartialUpdate(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated,IsOwner]
     def patch(self, request, i):
         r = get_object_or_404(Review, id=i)
-        u=request.user
+        self.check_object_permissions(request,r)
         serializer_instance = ReviewSerializer(instance=r, data=request.data,partial=True)
         if serializer_instance.is_valid():
-            serializer_instance.save(user=u)
+            serializer_instance.save()
             return Response(serializer_instance.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_instance.errors)
@@ -65,8 +75,18 @@ class ReviewDelete(APIView):
         r.delete()
         return Response({"message":"DELETED"})
 
+from django.db.models import Q
+from recipes.serializers import recipeserializer
+class ReviewSearch(APIView):
+    def get(self,request):
+        #fetches keywords from query parameters
+        data=request.query_params.get('search')
+        #reads all records matching with the keyword from db table(using filter)
+        m=recipe.objects.filter((Q(recipe_name__icontains=data))|
+                                Q(ingredients__icontains=data ))
+        serializer_instance=recipeserializer(m,many=True)
 
-
+        return Response(serializer_instance.data)
 
 
 

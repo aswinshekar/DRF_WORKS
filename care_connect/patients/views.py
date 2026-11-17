@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from patients.serializers import UserSerializer
 
 from doctors.models import Doctor
-
 # Create your views here.
 #API VIEWS FOR CREATING DOCTOR
 #API VIEWS FOR READING ALL DOCTORS

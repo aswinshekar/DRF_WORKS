@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'doctors',
     'patients',
-    'rest_framework'
+    'rest_framework','rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
