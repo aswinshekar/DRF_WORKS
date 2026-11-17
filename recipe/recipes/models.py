@@ -10,3 +10,5 @@ class recipe(models.Model):
     mealtype=models.CharField(max_length=30,choices=mealtype_choices)
     cuisine=models.CharField(max_length=30,choices=cuisine_choices)
     image=models.ImageField(upload_to="recipe")
+    def __str__(self):
+        return self.recipe_name
