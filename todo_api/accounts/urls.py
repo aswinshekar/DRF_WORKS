@@ -23,6 +23,6 @@ from accounts import views
 from accounts import views
 urlpatterns = [
     path('register/',views.RegisterAPI.as_view()),
-    path('login',obtain_auth_token)
-
+    path('login',obtain_auth_token),
+    path('logout',views.LogoutAPIView.as_view())
 ]
