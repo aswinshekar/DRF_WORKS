@@ -10,13 +10,20 @@ class ReviewSerializer(serializers.ModelSerializer):
     # user=UserSerializer()
     # recipe=recipeserializer()
     # #DISPLAY THE ALL FIELDS OF THE RELATED DATA
-    user=StringRelatedField()
-    recipe=StringRelatedField()
+    # #STRINGRELATEDFIELD
+    # user=StringRelatedField()
+    # recipe=StringRelatedField()
+    # #DISPLAYS THE RELATED OBJECTS USING ITS STRING REPRESENTATION DEFINED INSIDE STR
+    # #__str__()
+    message=serializers.SerializerMethodField()
+    # count=serializers.SerializerMethodField()
     created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     class Meta:
         model=Review
         # fields="__all__"
         exclude = ['id']
         read_only_fields=['user','created']
+    def get_message(self,obj):
+        return "hello"
 
 
