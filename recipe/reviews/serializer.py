@@ -16,7 +16,8 @@ class ReviewSerializer(serializers.ModelSerializer):
     # #DISPLAYS THE RELATED OBJECTS USING ITS STRING REPRESENTATION DEFINED INSIDE STR
     # #__str__()
     message=serializers.SerializerMethodField()
-    # count=serializers.SerializerMethodField()
+
+    user=serializers.SerializerMethodField()
     created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     class Meta:
         model=Review
@@ -25,5 +26,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only_fields=['user','created']
     def get_message(self,obj):
         return "hello"
+
+    def get_user(self,obj):
+        return obj.user.email
 
 
