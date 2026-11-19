@@ -13,6 +13,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Patient_APIView" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/demopro" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/recipe" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/expensetracker_api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/todo_api" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
