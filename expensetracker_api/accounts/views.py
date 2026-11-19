@@ -15,4 +15,7 @@ class RegisterAPI(APIView):
 
         else:
             return Response(serializer_instance.errors, status=status.HTTP_400_BAD_REQUEST)
-class Logout(API)
+class LogoutAPI(APIView):
+    def get(self,request):
+        request.user.auth_token.delete()
+        return Response({"message":"LOGOUT SUCCESSFULLY"},status==status.HTTP_200_OK)
