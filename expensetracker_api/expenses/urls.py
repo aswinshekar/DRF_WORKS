@@ -20,4 +20,5 @@ from rest_framework.views import APIView
 from expenses import views
 urlpatterns = [
     path('create',views.ExpenseCreate.as_view()),
+    path('list',views.ExpenseList.as_view())
 ]

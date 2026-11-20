@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.templatetags import rest_framework
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from expenses import serializer
 from expenses.serializer import ExpenseSerializer
 from rest_framework import status
 
@@ -17,6 +19,16 @@ class ExpenseCreate(APIView):
             serializer_instance.save(user=request.user)
             return Response(serializer_instance.data,status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer_instance.erros,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
+from expenses.models import Expense
+class ExpenseList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        e=Expense.objects.filter(user=request.user)#filters only current user expenses
+        serializer_instance=ExpenseSerializer(e,many=True)
+        return Response(serializer_instance.data,status=status.HTTP_200_OK)
+
+
 
 
