@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.templatetags import rest_framework
@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from expenses import serializer
 from expenses.serializer import ExpenseSerializer
 from rest_framework import status
+
+from expenses.permission import IsOwner
+
 
 # Create your views here.
 class ExpenseCreate(APIView):
@@ -29,6 +32,14 @@ class ExpenseList(APIView):
         serializer_instance=ExpenseSerializer(e,many=True)
         return Response(serializer_instance.data,status=status.HTTP_200_OK)
 
+class ExpenseRetrive(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated,IsOwner]
+    def get(self,request,pk):
+        r=get_object_or_404(Expense,id=pk)
+        self.check_object_permissions(request,r)
+        serializer_instance=ExpenseSerializer(r)
+        return Response(serializer_instance.data)
 
 
 

@@ -15,5 +15,3 @@ class Expense(models.Model):
     updated=models.DateTimeField(auto_now=True)#when ever updation it adds
     payment_method=models.CharField(max_length=30,choices=payment_choices)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    def __str__(self):
-        return self.user.email
