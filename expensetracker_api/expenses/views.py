@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, get_object_or_404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -62,5 +64,19 @@ class ExpenseUpdate(APIView):
         else:
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
 
+from django.db.models import Sum
+from datetime import date
 
-
+class ExpenseSummary(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        #FIND TODAYS DATE
+        today_date= datetime.now().date()
+        #FIND QUERYSET
+        qs=Expense.objects.filter(user=request.user,created__date=today_date)
+        #FIND AGGREGATE
+        if qs:
+            total=qs.aggregate(total=Sum('amount'))
+        #RETURN RESPONSE
+        return Response({"todays_total":total},status=status.HTTP_200_OK)
