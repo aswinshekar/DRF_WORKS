@@ -65,17 +65,18 @@ class ExpenseUpdate(APIView):
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
 
 from django.db.models import Sum
-from datetime import date
+from datetime import datetime
 
 class ExpenseSummary(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request):
         #FIND TODAYS DATE
-        today_date= datetime.now().date()
+        today_date=datetime.now().date()
         #FIND QUERYSET
         qs=Expense.objects.filter(user=request.user,created__date=today_date)
         #FIND AGGREGATE
+        total=0
         if qs:
             total=qs.aggregate(total=Sum('amount'))
         #RETURN RESPONSE

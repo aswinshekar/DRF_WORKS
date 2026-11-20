@@ -23,5 +23,6 @@ urlpatterns = [
     path('list',views.ExpenseList.as_view()),
     path('getid/<int:pk>',views.ExpenseRetrive.as_view()),
     path('delete/<int:pk',views.ExpenseDelete.as_view()),
-    path('update/<int:pk>',views.ExpenseUpdate.as_view())
+    path('update/<int:pk>',views.ExpenseUpdate.as_view()),
+    path('expensesummary',views.ExpenseSummary.as_view())
 ]
