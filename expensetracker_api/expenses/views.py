@@ -78,6 +78,6 @@ class ExpenseSummary(APIView):
         #FIND AGGREGATE
         total=0
         if qs:
-            total=qs.aggregate(total=Sum('amount'))
+            total=qs.aggregate(total=Sum('amount')).get('total')#{'total':5000}
         #RETURN RESPONSE
         return Response({"todays_total":total},status=status.HTTP_200_OK)
