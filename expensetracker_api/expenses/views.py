@@ -45,16 +45,17 @@ class ExpenseDelete(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwner]
     def delete(self, request, pk):
-        r = get_object_or_404(Expense, id=pk)
+        r = get_object_or_404(Expense,id=pk)
         self.check_object_permissions(request, r)
         r.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ExpenseUpdate(APIView):
     authentication_classes = [TokenAuthentication]#to check whether user is valid
-    permission_classes = [IsAuthenticated] #only logged in can create expense
-    def post(self,request):
-        serializer_instance=ExpenseSerializer(data=request.data)#all fields expect user
+    permission_classes = [IsAuthenticated,IsOwner] #only logged in can create expense
+    def put(self,request,pk):
+        r = get_object_or_404(Expense, id=pk)
+        serializer_instance=ExpenseSerializer(instance=r,data=request.data)#all fields expect user
         if serializer_instance.is_valid():
             serializer_instance.save(user=request.user)
             return Response(serializer_instance.data,status=status.HTTP_201_CREATED)
