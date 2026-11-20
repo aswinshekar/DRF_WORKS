@@ -21,7 +21,7 @@ from expenses import views
 urlpatterns = [
     path('create',views.ExpenseCreate.as_view()),
     path('list',views.ExpenseList.as_view()),
-    path('get<int:pk',views.ExpenseRetrive.as_view()),
-    path('delete<int:pk',views.ExpenseDelete.as_view()),
-    path('update<int:pk>',views.ExpenseUpdate.as_view())
+    path('getid/<int:pk>',views.ExpenseRetrive.as_view()),
+    path('delete/<int:pk',views.ExpenseDelete.as_view()),
+    path('update/<int:pk>',views.ExpenseUpdate.as_view())
 ]
