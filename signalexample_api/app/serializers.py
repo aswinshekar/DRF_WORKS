@@ -1,4 +1,4 @@
-from accounts import serializers
+
 from app.models import Book,BookIssue
 from rest_framework import  serializers
 
@@ -7,7 +7,6 @@ class BookSerializer(serializers.ModelSerializer):
         model=Book
         fields="__all__"
         read_only_fields=['id']
-
 
 class BookIssueSerializer(serializers.ModelSerializer):
     class Meta:
