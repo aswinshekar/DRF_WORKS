@@ -79,5 +79,7 @@ class ExpenseSummary(APIView):
         total=0
         if qs:
             total=qs.aggregate(total=Sum('amount')).get('total')#{'total':5000}
+            # ANNOTATE CATEGORY WISE
+            category_total=qs.values('category').annotate(total=Sum('amount'))
         #RETURN RESPONSE
         return Response({"todays_total":total},status=status.HTTP_200_OK)
