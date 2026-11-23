@@ -1,11 +1,11 @@
 from django.dispatch import receiver
-from django.db.models import post_save
+from django.db.models.signals import post_save
 
 from app.models import BookIssue
+from datetime import timedelta
 
 
-
-@receiver(post_save,model=BookIssue):
+@receiver(post_save,sender=BookIssue)
 def handle__bookissue_created(sender,instance,created,**kwargs):
     if created:
     #due date calculate
