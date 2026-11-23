@@ -77,12 +77,23 @@ class ExpenseSummary(APIView):
         qs=Expense.objects.filter(user=request.user,created__date=today_date)
         #FIND AGGREGATE
         total=0
-        response_data={'todays_total':0}
+        response_data={'todays_total':0,'category_total':0}
         if qs:
             total=qs.aggregate(total=Sum('amount')).get('total')#{'total':5000}
             # ANNOTATE CATEGORY WISE
             category_total=qs.values('category').annotate(total=Sum('amount'))
             response_data['todays_total']=total
             response_data['category_total']=category_total
+        month=datetime.now().month
+        year=datetime.now().year
+        u=request.user
+        qs=Expense.objects.filter(user=u,created__month=month,created__year=year)
+        if qs:
+            monthly_total = qs.aggregate(total=Sum('amount')).get('total')  # {'total':5000}
+            # ANNOTATE CATEGORY WISE
+            Monthly_category_total = qs.values('category').annotate(total=Sum('amount'))
+            response_data['Monthly_total'] =  monthly_total
+            response_data['Monthly_category_total'] = Monthly_category_total
+
         #RETURN RESPONSE
         return Response(response_data,status=status.HTTP_200_OK)
