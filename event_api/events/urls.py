@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-#
-# urlpatterns = [
-#     path(),
-# ]
+from events import views
+urlpatterns = [
+    path('list',views.EventListCreateView.as_view()),
+
+]
