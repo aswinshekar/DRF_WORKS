@@ -7,5 +7,5 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields=['username','password','email','phone','roles']
         read_only_fields=['id']
 
-    def create(self,validated_data):
-        return CustomUser.objects.create_user(**validated_data)
+    # def create(self,validated_data):
+    #     return CustomUser.objects.create_user(**validated_data)
