@@ -1,5 +1,5 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 
 from app.models import BookIssue
 from datetime import timedelta
@@ -15,4 +15,11 @@ def handle__bookissue_created(sender,instance,created,**kwargs):
         book=instance.book
         book.available_copies-=1
         book.save(update_fields=['available_copies'])
+@receiver(post_delete,sender=BookIssue)
+def handle__bookissue_delete(sender,instance,**kwargs):
+    book = instance.book
+    print(book)
+    book.available_copies += 1
+    book.save(update_fields=['available_copies'])
+
 

@@ -44,4 +44,4 @@ class BookIssueDelete(APIView):
     def delete(self,request,pk):
         b=get_object_or_404(BookIssue,id=pk)
         b.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response("deleted",status=status.HTTP_204_NO_CONTENT)

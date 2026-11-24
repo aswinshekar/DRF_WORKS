@@ -20,6 +20,6 @@ from rest_framework.views import APIView
 from app import views
 urlpatterns = [
     path('book',views.BookListCreateView.as_view()),
-    path('bookissue',views.BookIssueListCreate.as_view())
-
+    path('bookissue',views.BookIssueListCreate.as_view()),
+    path('delete/<int:pk>',views.BookIssueDelete.as_view())
 ]

@@ -14,6 +14,7 @@
       <sourceFolder url="file://$MODULE_DIR$/demopro" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/recipe" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/event_api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/expensetracker_api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/signalexample_api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/todo_api" isTestSource="false" />
