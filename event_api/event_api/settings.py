@@ -69,7 +69,10 @@ TEMPLATES = [
         },
     },
 ]
-
+import os
+print(os.path.join(BASE_DIR,'media'))
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'
 WSGI_APPLICATION = 'event_api.wsgi.application'
 
 
