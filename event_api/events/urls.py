@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import path
 from events import views
 urlpatterns = [
-    path('list',views.EventListCreateView.as_view()),
-
+    path('eventview',views.EventListCreateView.as_view()),
+    path('eventview/<int:pk>',views.EventRetriveUpdateDelete.as_view())
 ]
