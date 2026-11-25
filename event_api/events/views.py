@@ -35,6 +35,7 @@ class EventRetriveUpdateDelete(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsOrganizerOrReadOnly]
     def get(self, request, pk):
+
         if request.user.roles=='customer':
             e = get_object_or_404(Event, id=pk)
         else:
@@ -54,9 +55,9 @@ class EventRetriveUpdateDelete(APIView):
         else:
             return Response(serializer_instance.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-    def delete(self,request,pk):
-        e = get_object_or_404(Event, id=pk)
-        self.check_object_permissions(request, e)
-        e.delete()
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    #
+    # def delete(self,request,pk):
+    #     e = get_object_or_404(Event, id=pk)
+    #     self.check_object_permissions(request, e)
+    #     e.delete()
+    #     return Response(status=status.HTTP_400_BAD_REQUEST)
