@@ -31,19 +31,19 @@ class EventListCreateView(APIView):
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-class EventRetriveUpdateDelete(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsOrganizerOrReadOnly]
-    def get(self, request, pk):
-
-        if request.user.roles=='customer':
-            e = get_object_or_404(Event, id=pk)
-        else:
-            e = get_object_or_404(Event, id=pk,organizer=request.user)
-        serializer_instance = EventSerializer(e)
-        return Response(serializer_instance.data, status=status.HTTP_200_OK)
-
-
+# class EventRetriveUpdateDelete(APIView):
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsOrganizerOrReadOnly]
+#     def get(self, request, pk):
+#
+#         if request.user.roles=='customer':
+#             e = get_object_or_404(Event, id=pk)
+#         else:
+#             e = get_object_or_404(Event, id=pk,organizer=request.user)
+#         serializer_instance = EventSerializer(e)
+#         return Response(serializer_instance.data, status=status.HTTP_200_OK)
+#
+#
 
     def put(self,request,pk):
         e = get_object_or_404(Event, id=pk)
