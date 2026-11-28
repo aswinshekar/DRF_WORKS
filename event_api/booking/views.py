@@ -45,9 +45,9 @@ class BookingRetrieveUpdateDelete(APIView):
         else:
             return Response(serilaizer_instance.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # def delete(self, request, pk):
-    #     b = get_object_or_404(Booking, id=pk)
-    #     self.check_object_permissions(request, b)
-    #     b.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-    #
+    def delete(self, request, pk):
+        b = get_object_or_404(Booking, id=pk)
+        self.check_object_permissions(request, b)
+        b.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
