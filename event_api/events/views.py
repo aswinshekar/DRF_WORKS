@@ -10,17 +10,17 @@ from events.models import Event
 from events.serializers import  EventSerializer
 from rest_framework import status
 # Create your views here.
-# class EventListCreateView(APIView):
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsOrganizerOrReadOnly]
-#     def get(self,request):
-#         if request.user.role=='customer':
-#             qs=Event.objects.all()#IF CUSTOMER READS ALL RECORDS
-#         else:
-#             qs=Event.objects.filter(organizer=request.user)#IF ORGANIZER ONLY THERIR RECORD
-#         serializer_instance=EventSerializer(qs,many=True)
-#         return Response(serializer_instance.data,status=status.HTTP_200_OK)
-#
+class EventListCreateView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOrganizerOrReadOnly]
+    def get(self,request):
+        if request.user.role=='customer':
+            qs=Event.objects.all()#IF CUSTOMER READS ALL RECORDS
+        else:
+            qs=Event.objects.filter(organizer=request.user)#IF ORGANIZER ONLY THERIR RECORD
+        serializer_instance=EventSerializer(qs,many=True)
+        return Response(serializer_instance.data,status=status.HTTP_200_OK)
+
 
     def post(self,request):
         serializer_instance=EventSerializer(data=request.body)
